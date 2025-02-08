@@ -1,0 +1,214 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector, pg_embedding, pg_similarity]
+}
+
+model User {
+  id                     String              @id
+  email                  String              @unique
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime
+  name                   String?
+  avatarUrl              String?
+  emailVerified          DateTime?
+  apiKey                 String?             @unique
+  bio                    String?
+  tier                   SubscriptionTier    @default(free)
+  credits                Int                 @default(0)
+  isActive               Boolean             @default(true)
+  lastLoginAt            DateTime?
+  hasCompletedOnboarding Boolean             @default(false)
+  hasAcceptedToS         Boolean             @default(false)
+  stripeSubscriptionId   String?
+  stripeCustomerId       String?
+  stripePriceId          String?
+  role                   Role                @default(USER)
+  status                 UserStatus          @default(ACTIVE)
+  ChartAnalysis          ChartAnalysis[]
+  CreditPurchase         CreditPurchase[]
+  CreditTransaction      CreditTransaction[]
+  Subscription           Subscription?
+  UserPreferences        UserPreferences?
+}
+
+model ChartAnalysis {
+  id          String   @id
+  userId      String
+  prompt      String
+  imageUrl    String
+  aiResponse  String
+  isHelpful   Boolean?
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CreditPurchase {
+  id        String        @id
+  userId    String
+  packageId String
+  amount    Int
+  cost      Float
+  status    PaymentStatus @default(PENDING)
+  stripeId  String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime
+  User      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CreditTransaction {
+  id          String           @id
+  userId      String
+  amount      Int
+  type        CreditActionType
+  feature     AIFeature?
+  description String?
+  createdAt   DateTime         @default(now())
+  User        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Subscription {
+  id                   String             @id
+  userId               String             @unique
+  plan                 SubscriptionTier
+  status               SubscriptionStatus
+  startDate            DateTime
+  endDate              DateTime?
+  stripeSubscriptionId String?            @unique
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime
+  User                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TradingPattern {
+  id                String                 @id
+  name              String                 @unique
+  description       String
+  type              PatternType
+  timeframes        String[]
+  reliability       Float
+  conditions        Json
+  examples          String[]
+  signals           Json
+  embedding         Unsupported("vector(1536)")?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime
+  successRate       Float?
+  failureConditions String[]
+  timeframeBias     String[]
+
+  @@index([type])
+}
+
+model TradingPrinciple {
+  id          String                 @id
+  name        String                 @unique
+  category    PrincipleCategory
+  description String
+  rules       Json
+  examples    Json
+  importance  Int
+  context     String[]
+  warnings    String[]
+  metrics     Json?
+  embedding   Unsupported("vector(1536)")?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime
+
+  @@index([category])
+}
+
+model UserPreferences {
+  id                   String   @id
+  userId               String   @unique
+  theme                String   @default("system")
+  emailMarketing       Boolean  @default(false)
+  securityAlerts       Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime
+  User                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum AIFeature {
+  CHART_ANALYSIS
+  TRADING_INSIGHTS
+  RISK_ANALYSIS
+}
+
+enum CreditActionType {
+  PURCHASE
+  USAGE
+  REFUND
+  MONTHLY_GRANT
+  BONUS
+}
+
+enum PatternType {
+  CANDLESTICK
+  CHART_PATTERN
+  PRICE_ACTION
+  HARMONIC
+  FIBONACCI
+  TREND
+  VOLATILITY
+  MOMENTUM
+  REVERSAL
+  CONTINUATION
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum PrincipleCategory {
+  RISK_MANAGEMENT
+  POSITION_SIZING
+  MONEY_MANAGEMENT
+  PSYCHOLOGY
+  TRADE_MANAGEMENT
+  PORTFOLIO_MANAGEMENT
+  RISK_REWARD
+  TRADING_PLAN
+  PERFORMANCE_TRACKING
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  active
+  inactive
+  canceling
+  past_due
+}
+
+enum SubscriptionTier {
+  free
+  pro
+  enterprise
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}

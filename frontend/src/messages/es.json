@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "Trading App",
+    "description": "Una aplicación moderna de trading con análisis impulsado por IA"
+  },
+  "nav": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "settings": "Ajustes",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "faq": "Preguntas Frecuentes",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión"
+  },
+  "auth": {
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "loginButton": "Iniciar Sesión",
+    "signupButton": "Crear Cuenta",
+    "orContinueWith": "O continuar con"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de nuevo, {name}",
+    "credits": "Créditos: {amount}",
+    "aiAnalysis": "Análisis IA",
+    "uploadChart": "Subir Gráfico",
+    "strategies": "Estrategias",
+    "recentAnalyses": "Análisis Recientes"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "profile": "Perfil",
+    "preferences": "Preferencias",
+    "notifications": "Notificaciones",
+    "billing": "Facturación",
+    "security": "Seguridad"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "loading": "Cargando...",
+    "success": "¡Éxito!",
+    "error": "Error",
+    "retry": "Reintentar"
+  }
+}

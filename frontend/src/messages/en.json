@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "Trading App",
+    "description": "A modern trading application with AI-powered insights"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "loginButton": "Login",
+    "signupButton": "Create Account",
+    "orContinueWith": "Or continue with"
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}",
+    "credits": "Credits: {amount}",
+    "aiAnalysis": "AI Analysis",
+    "uploadChart": "Upload Chart",
+    "strategies": "Strategies",
+    "recentAnalyses": "Recent Analyses"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "billing": "Billing",
+    "security": "Security"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "success": "Success!",
+    "error": "Error",
+    "retry": "Retry"
+  }
+}
