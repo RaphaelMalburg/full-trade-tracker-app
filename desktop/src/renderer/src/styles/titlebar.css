@@ -1,0 +1,21 @@
+.header {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+button,
+input,
+textarea,
+img,
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.content-area {
+  -webkit-app-region: no-drag;
+}
+
+.window-frame-header {
+  -webkit-app-region: drag;
+  user-select: none;
+}
