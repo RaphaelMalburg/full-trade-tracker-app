@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
@@ -7,14 +7,14 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DIRECT_URL")
-  extensions = [vector, pg_embedding, pg_similarity]
+  extensions = [vector]
 }
 
 model User {
   id                     String              @id
   email                  String              @unique
   createdAt              DateTime            @default(now())
-  updatedAt              DateTime
+  updatedAt              DateTime            @updatedAt
   name                   String?
   avatarUrl              String?
   emailVerified          DateTime?
@@ -39,20 +39,20 @@ model User {
 }
 
 model ChartAnalysis {
-  id          String   @id
-  userId      String
-  prompt      String
-  imageUrl    String
-  aiResponse  String
-  isHelpful   Boolean?
-  createdAt   DateTime @default(now())
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  userId     String
+  prompt     String
+  imageUrl   String
+  aiResponse String
+  isHelpful  Boolean?
+  createdAt  DateTime @default(now())
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model CreditPurchase {
-  id        String        @id
+  id        String        @id @default(cuid())
   userId    String
   packageId String
   amount    Int
@@ -60,14 +60,14 @@ model CreditPurchase {
   status    PaymentStatus @default(PENDING)
   stripeId  String?
   createdAt DateTime      @default(now())
-  updatedAt DateTime
+  updatedAt DateTime      @updatedAt
   User      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model CreditTransaction {
-  id          String           @id
+  id          String           @id @default(cuid())
   userId      String
   amount      Int
   type        CreditActionType
@@ -80,7 +80,7 @@ model CreditTransaction {
 }
 
 model Subscription {
-  id                   String             @id
+  id                   String             @id @default(cuid())
   userId               String             @unique
   plan                 SubscriptionTier
   status               SubscriptionStatus
@@ -88,15 +88,15 @@ model Subscription {
   endDate              DateTime?
   stripeSubscriptionId String?            @unique
   createdAt            DateTime           @default(now())
-  updatedAt            DateTime
+  updatedAt            DateTime           @updatedAt
   User                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model TradingPattern {
-  id                String                 @id
-  name              String                 @unique
+  id                String                       @id @default(cuid())
+  name              String                       @unique
   description       String
   type              PatternType
   timeframes        String[]
@@ -105,8 +105,8 @@ model TradingPattern {
   examples          String[]
   signals           Json
   embedding         Unsupported("vector(1536)")?
-  createdAt         DateTime               @default(now())
-  updatedAt         DateTime
+  createdAt         DateTime                     @default(now())
+  updatedAt         DateTime                     @updatedAt
   successRate       Float?
   failureConditions String[]
   timeframeBias     String[]
@@ -115,8 +115,8 @@ model TradingPattern {
 }
 
 model TradingPrinciple {
-  id          String                 @id
-  name        String                 @unique
+  id          String                       @id @default(cuid())
+  name        String                       @unique
   category    PrincipleCategory
   description String
   rules       Json
@@ -126,21 +126,21 @@ model TradingPrinciple {
   warnings    String[]
   metrics     Json?
   embedding   Unsupported("vector(1536)")?
-  createdAt   DateTime               @default(now())
-  updatedAt   DateTime
+  createdAt   DateTime                     @default(now())
+  updatedAt   DateTime                     @updatedAt
 
   @@index([category])
 }
 
 model UserPreferences {
-  id                   String   @id
-  userId               String   @unique
-  theme                String   @default("system")
-  emailMarketing       Boolean  @default(false)
-  securityAlerts       Boolean  @default(true)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime
-  User                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  theme          String   @default("system")
+  emailMarketing Boolean  @default(false)
+  securityAlerts Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum AIFeature {

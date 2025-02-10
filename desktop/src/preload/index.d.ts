@@ -10,6 +10,10 @@ declare global {
       writeNote: WriteNote
       createNote: CreateNote
       deleteNote: DeleteNote
+      onAuthData: (callback: (data: AuthData) => void) => void
+      onAuthError: (callback: (error: string) => void) => void
+      openAuthWindow: () => void
+      removeAuthListener: () => void
     }
   }
 }

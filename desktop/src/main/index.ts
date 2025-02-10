@@ -10,6 +10,77 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 let mainWindow: BrowserWindow | null = null
 
+// Register custom protocol
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('trade-tracker', process.execPath, [process.argv[1]])
+  }
+} else {
+  app.setAsDefaultProtocolClient('trade-tracker')
+}
+
+// Handle open-auth-window IPC event
+ipcMain.on('open-auth-window', (_, url: string) => {
+  shell.openExternal(url)
+})
+
+// Handle custom protocol on Windows
+if (process.platform === 'win32') {
+  const gotTheLock = app.requestSingleInstanceLock()
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', (_, commandLine) => {
+      console.log('[Protocol] Second instance detected with command line:', commandLine)
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
+      }
+      // Handle the protocol URL
+      const url = commandLine.pop()
+      console.log('[Protocol] URL from command line:', url)
+      if (url) handleAuthUrl(url)
+    })
+  }
+}
+
+function handleAuthUrl(url: string) {
+  try {
+    console.log('[Protocol] Handling URL:', url)
+    const authUrl = new URL(url)
+    console.log('[Protocol] Protocol:', authUrl.protocol)
+    console.log('[Protocol] Pathname:', authUrl.pathname)
+    console.log('[Protocol] Search params:', Array.from(authUrl.searchParams.keys()))
+
+    if (authUrl.protocol === 'trade-tracker:' && authUrl.pathname === '/auth') {
+      const params = Object.fromEntries(authUrl.searchParams.entries())
+      console.log('[Protocol] Auth params received:', {
+        ...params,
+        access_token: '***',
+        refresh_token: '***'
+      })
+
+      if (!mainWindow) {
+        console.error('[Protocol] No main window found')
+        return
+      }
+
+      mainWindow.webContents.send('auth-data', params)
+      console.log('[Protocol] Sent auth data to renderer')
+    } else {
+      console.log('[Protocol] URL did not match expected format')
+    }
+  } catch (error) {
+    console.error('[Protocol] Error handling URL:', error)
+  }
+}
+
+// Handle custom protocol on macOS
+app.on('open-url', (_, url) => {
+  console.log('[Protocol] Received URL via open-url:', url)
+  handleAuthUrl(url)
+})
+
 function createWindow(): void {
   // Create the browser window.
   mainWindow = new BrowserWindow({

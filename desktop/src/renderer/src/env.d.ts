@@ -1,16 +1,9 @@
 /// <reference types="vite/client" />
 
+import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote, WindowContext } from '@shared/types'
+
 interface Window {
-  context: {
-    locale: string
-    getNotes: (...args: any[]) => Promise<any>
-    readNote: (...args: any[]) => Promise<any>
-    writeNote: (...args: any[]) => Promise<any>
-    createNote: (...args: any[]) => Promise<any>
-    deleteNote: (...args: any[]) => Promise<any>
-    getWindows: () => Promise<Array<{ id: string; name: string; thumbnail: string }>>
-    captureWindow: (sourceId: string) => Promise<{ id: string; name: string; image: string } | null>
-  }
+  context: WindowContext
   electron: {
     ipcRenderer: {
       send: (channel: string, ...args: unknown[]) => void
@@ -18,4 +11,12 @@ interface Window {
       once: (channel: string, func: (...args: unknown[]) => void) => void
     }
   }
+}
+
+interface AuthData {
+  access_token: string
+  refresh_token: string
+  expires_at: string
+  user_id: string
+  email: string
 }

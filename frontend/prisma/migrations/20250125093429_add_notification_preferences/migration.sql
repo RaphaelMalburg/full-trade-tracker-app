@@ -1,0 +1,19 @@
+-- AlterTable
+ALTER TABLE "Trade" ALTER COLUMN "embedding" SET DEFAULT NULL,
+ALTER COLUMN "accountBalance" SET DEFAULT NULL,
+ALTER COLUMN "accountEquity" SET DEFAULT NULL,
+ALTER COLUMN "marginUsed" SET DEFAULT NULL,
+ALTER COLUMN "accountLeverage" SET DEFAULT NULL,
+ALTER COLUMN "marginLevel" SET DEFAULT NULL,
+ALTER COLUMN "freeMargin" SET DEFAULT NULL,
+ALTER COLUMN "dailyReturn" SET DEFAULT NULL;
+
+-- AlterTable
+ALTER TABLE "UserPreferences" ADD COLUMN     "consecutiveLossLimit" INTEGER,
+ADD COLUMN     "dailyJournalEmail" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "emailMarketing" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "maxDailyLoss" DOUBLE PRECISION,
+ADD COLUMN     "maxWeeklyLoss" DOUBLE PRECISION,
+ADD COLUMN     "riskAlerts" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "securityAlerts" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN     "theme" TEXT NOT NULL DEFAULT 'system';

@@ -13,7 +13,13 @@ export default defineConfig({
     }
   },
   preload: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    resolve: {
+      alias: {
+        '@shared': resolve('src/shared'),
+        '@renderer': resolve('src/renderer/src')
+      }
+    }
   },
   renderer: {
     assetsInclude: 'src/renderer/assets/**',

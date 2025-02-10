@@ -1,5 +1,6 @@
-import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote } from '@shared/types'
+import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote, AuthData } from '@shared/types'
 import { contextBridge, ipcRenderer } from 'electron'
+import { getConfig } from '@shared/config'
 
 if (!process.contextIsolated) {
   throw new Error('contextIsolation must be enabled in the BrowserWindow')
@@ -14,7 +15,27 @@ try {
     createNote: (...args: Parameters<CreateNote>) => ipcRenderer.invoke('createNote', ...args),
     deleteNote: (...args: Parameters<DeleteNote>) => ipcRenderer.invoke('deleteNote', ...args),
     getWindows: () => ipcRenderer.invoke('get-windows'),
-    captureWindow: (sourceId: string) => ipcRenderer.invoke('capture-window', sourceId)
+    captureWindow: (sourceId: string) => ipcRenderer.invoke('capture-window', sourceId),
+    openAuthWindow: () => {
+      console.log('[Preload] Opening auth window')
+      const webAppUrl = getConfig('WEB_APP_URL')
+      const authUrl = `${webAppUrl}/sign-in?electron=true`
+      ipcRenderer.send('open-auth-window', authUrl)
+    },
+    onAuthData: (callback: (data: AuthData) => void) => {
+      console.log('[Preload] Setting up auth data listener')
+      ipcRenderer.on('auth-data', (_, data) => {
+        console.log('[Preload] Received auth data from main process:', {
+          ...data,
+          access_token: '***',
+          refresh_token: '***'
+        })
+        callback(data)
+      })
+    },
+    removeAuthListener: () => {
+      ipcRenderer.removeAllListeners('auth-data')
+    }
   })
 
   contextBridge.exposeInMainWorld('electron', {

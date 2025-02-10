@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trade Tracker Pro
+
+A comprehensive trading assistance tool with automated trade journaling and AI-powered insights.
+
+## Features
+
+- 📊 Automated Trade Journaling
+- 🤖 AI-Powered Trading Copilot
+- 📈 Advanced Analytics & Performance Metrics
+- 🔄 Platform Integrations (IBKR, NinjaTrader, Webull)
+- 🤖 Trading Bot Marketplace
+- 👁️ Computer Vision Chart Analysis
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 14 (App Router)
+- TypeScript
+- Supabase (Auth & Database)
+- Prisma (ORM)
+- TailwindCSS
+- Shadcn UI
+- Framer Motion
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Detailed documentation can be found in the `/docs` directory:
 
-## Learn More
+- [User Guide](./docs/user-guide.md)
+- [Developer Guide](./docs/developer-guide.md)
+- [API Documentation](./docs/api-docs.md)
+- [Architecture](./docs/architecture.md)
 
-To learn more about Next.js, take a look at the following resources:
+## Pricing Tiers
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Free Tier**: Basic features with 50 trades/month limit
+- **Pro Tier** ($14.99/month): Unlimited trades, all integrations, 25 AI credits
+- **Enterprise** ($79/month): Team features, API access, 200 AI credits
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Please read our [Contributing Guidelines](./docs/contributing.md) before submitting any changes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

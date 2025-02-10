@@ -1,0 +1,97 @@
+---
+description: general instructions
+globs: *
+---
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, and Tailwind.
+
+## Key Principles
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+## Naming Conventions
+
+- Use lowercase with dashes for directories (e.g., `components/auth-wizard`).
+- Favor named exports for components.
+
+## TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+
+## Syntax and Formatting
+
+- Use the `function` keyword for pure functions.
+- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
+- Use declarative JSX.
+
+## UI and Styling
+
+- Use **Shadcn UI**, **Radix UI**, and **Tailwind CSS** for components and styling.
+- Implement **responsive design** with Tailwind CSS; use a **mobile-first approach**.
+
+## Performance Optimization
+
+- **Limit `use client`**: Favor **React Server Components (RSC)**.
+- Avoid unnecessary `useEffect` and `setState` when possible.
+- Wrap client components in `Suspense` with a fallback.
+- Use **dynamic imports** for non-critical components (`next/dynamic`).
+- Optimize images:
+  - Use **WebP format**.
+  - Include **explicit width and height** for layout stability.
+  - Implement **lazy loading** (`loading="lazy"`).
+
+## Key Conventions
+
+- Use `nuqs` for URL search parameter state management.
+- Optimize Web Vitals (**LCP, CLS, FID**).
+- Follow Next.js best practices for **Data Fetching, Rendering, and Routing**.
+- Avoid using `use client` for:
+  - Data fetching (favor **server components** or **Next.js SSR**).
+  - State management (use **Zustand, Jotai**, or **React Context** when necessary).
+
+## Task Management & Scratchpad Usage
+
+- Maintain a **Scratchpad** to track progress, structure thoughts, and plan tasks.
+- When receiving a new task:
+  - **Review** the Scratchpad.
+  - **Clear old tasks** if necessary.
+  - **Plan steps** before execution.
+- Use **TODO markers** to track task progress:
+  - `[X]` Completed Task
+  - `[ ]` Pending Task
+- Update the Scratchpad with progress details after completing subtasks.
+- Use the Scratchpad for **reflection and planning**, especially after milestones.
+- Always refer to the Scratchpad when deciding the next step.
+
+## Debugging & Development Workflow
+
+- **Log useful debugging info** (errors, API responses, performance stats).
+- Read files **before modifying them**.
+- Follow a structured **Git workflow**:
+  - Use descriptive commit messages (`feat:`, `fix:`, `refactor:`).
+  - For **multiline commits**, use `git commit -F <filename>` instead of inline messages.
+  - Include `[Cursor]` in commit messages and PR titles when relevant.
+
+# Lessons
+
+## User-Specified Lessons
+
+- Use **Next.js conventions** for data fetching and component structure.
+- Prefer **React Server Components (RSC)** over `use client` when possible.
+- Always **read files** before modifying them.
+- **Include useful debugging info** in program output.
+- Use a **structured Git workflow**, including `git commit -F <filename>` for multiline messages.
+
+## Cursor Learned
+
+- Ensure **proper UTF-8 handling** for internationalized search queries.
+- Add **debug logs to stderr**, keeping the main output clean.
+- Use `'seaborn-v0_8'` instead of `'seaborn'` as the style name in visualization-related tasks.
+- Use `'gpt-4o-mini'` as the model name for OpenAI's GPT-4 with vision capabilities.
+
+# Scratchpad
